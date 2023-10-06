@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Working with Ajax</title>
+<script   src="https://code.jquery.com/jquery-3.1.1.min.js"   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="   crossorigin="anonymous"></script>
+
+</head>
+<body>
+    <div id="display">
+     
+    </div>
+    <script>
+        $(document).ready(function(){
+            setInterval(function(){
+                console.log("working");
+
+                $.ajax({
+                    type: 'GET',
+                    url: "/getAjax/{{'SENT'}}",
+
+                    success: function(response){
+                        alert(response);
+                        $("#display").empty();
+                        for (var key in response.messages)  //loop thru all message from view.getMessages to display all previous messages
+                        {
+                            var temp="<div class='container darker'><b>"+response.messages[key].user+"</b><p>"+response.messages[key].value+"</p><span class='time-left'>"+response.messages[key].date+"</span></div>";
+                            $("#display").append(temp);  //append to the div tag with id display
+                        }
+                        // var temp = "<h1>"+response+"</h1>"
+                        // $("#display").append(temp);
+                       
+                    },
+                    error: function(response){
+                        alert("Error dey")
+                    }
+                });
+            }, 2000);
+        })
+    </script>
+
+</body>
+</html>
